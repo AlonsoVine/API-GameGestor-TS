@@ -1,4 +1,4 @@
-import { Document } from "mongoose";
+import { Document, Types } from "mongoose";
 
 export interface IGame {
   titulo: string;
@@ -11,7 +11,7 @@ export interface IGame {
 }
 
 export interface IGameDocument extends IGame, Document {
-  _id: string;
+  _id: Types.ObjectId;
   createdAt?: Date;
   updatedAt?: Date;
 }

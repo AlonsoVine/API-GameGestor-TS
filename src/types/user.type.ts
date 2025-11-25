@@ -1,4 +1,4 @@
-import { Document } from "mongoose";
+import { Document, Types } from "mongoose";
 
 // Interfaz base del usuario (sin métodos de Mongoose)
 export interface IUser {
@@ -14,7 +14,7 @@ export interface IUser {
 
 // Interfaz que extiende Document (para usar con Mongoose)
 export interface IUserDocument extends IUser, Document {
-  _id: string;
+  _id: Types.ObjectId;
   createdAt?: Date;
   updatedAt?: Date;
 }
