@@ -22,6 +22,12 @@ const userSchema = new Schema<IUserDocument>(
       enum: ["user", "admin"],
       default: "user",
     },
+    // Campo para la foto de perfil
+    // Guardamos la ruta relativa del archivo (ej: "uploads/foto.jpg")
+    profilePicture: {
+      type: String,
+      default: "",
+    },
   },
   {
     collection: "usuarios",

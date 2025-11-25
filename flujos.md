@@ -146,15 +146,38 @@ graph LR
 ## 5. Actualizar Usuario (`PUT /usuarios/:username`)
 
 *   **Seguridad:** Requiere Token (`auth`).
-*   **Acción:** Busca por username y actualiza los campos enviados.
+*   **Funcionalidad Extra:** Soporta subida de archivos (`multipart/form-data`) para la foto de perfil.
+*   **Acción:** Busca por username y actualiza los campos enviados (incluyendo la ruta de la imagen si se sube).
+
+### 👣 Paso a Paso
+
+1. **Petición:** El cliente envía datos (texto) y/o archivo (`profilePicture`) en formato `multipart/form-data`.
+
+2.  **Router:**
+    *   Verifica Token (`auth`).
+    *   **Middleware de Archivos (`upload.single('profilePicture')`):**
+        *   Procesa la imagen entrante.
+        *   La guarda en la carpeta `uploads/`.
+        *   Añade `req.file` a la petición con los datos del archivo guardado.
+3.  **Controlador (`updateUserByUsernameController`):**
+    *   Recibe `req.body` (datos texto) y `req.file` (archivo).
+    *   Si hay archivo, añade la ruta (`req.file.path`) al objeto de actualización.
+    *   Llama al servicio.
+4.  **Servicio (`updateUserByUsername`):**
+    *   Actualiza el documento en Mongo.
+
+### 🧭 Diagrama
 
 ```mermaid
-graph LR
-    A[Cliente] -->|PUT /usuarios/pepe| B(Auth)
-    B -- OK --> C(Controller)
-    C --> D(Service: updateUser)
-    D --> E[(MongoDB)]
-    E --> A[Usuario Actualizado]
+graph TD
+    A[Cliente] -->|PUT + FormData| B(Router)
+    B --> C{Auth Middleware}
+    C -- OK --> D{Upload Middleware}
+    D -->|Guardar Archivo| E[Carpeta /uploads]
+    D -->|req.file| F(Controller)
+    F -->|Añadir path a datos| G(Service: updateUser)
+    G --> H[(MongoDB)]
+    H --> A[Usuario Actualizado]
 ```
 
 ---

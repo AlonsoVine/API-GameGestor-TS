@@ -9,6 +9,7 @@ export interface IUser {
   nombre?: string; // ? significa "opcional"
   apellido?: string;
   telefono?: string;
+  profilePicture?: string;
 }
 
 // Interfaz que extiende Document (para usar con Mongoose)

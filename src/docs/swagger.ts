@@ -1,5 +1,6 @@
 import swaggerJSDoc from "swagger-jsdoc";
 
+//http://localhost:5000/docs
 export const swaggerSpec = swaggerJSDoc({
   definition: {
     openapi: "3.1.0",
@@ -69,11 +70,20 @@ export const swaggerSpec = swaggerJSDoc({
           requestBody: {
             required: true,
             content: {
-              "application/json": { schema: { $ref: "#/components/schemas/LoginRequest" } },
+              "application/json": {
+                schema: { $ref: "#/components/schemas/LoginRequest" },
+              },
             },
           },
           responses: {
-            "200": { description: "Token", content: { "application/json": { schema: { $ref: "#/components/schemas/LoginResponse" } } } },
+            "200": {
+              description: "Token",
+              content: {
+                "application/json": {
+                  schema: { $ref: "#/components/schemas/LoginResponse" },
+                },
+              },
+            },
             "401": { description: "Credenciales inválidas" },
           },
         },
@@ -84,7 +94,11 @@ export const swaggerSpec = swaggerJSDoc({
           summary: "Crear usuario",
           requestBody: {
             required: true,
-            content: { "application/json": { schema: { $ref: "#/components/schemas/User" } } },
+            content: {
+              "application/json": {
+                schema: { $ref: "#/components/schemas/User" },
+              },
+            },
           },
           responses: { "201": { description: "Creado" } },
         },
@@ -92,7 +106,19 @@ export const swaggerSpec = swaggerJSDoc({
           tags: ["Usuarios"],
           summary: "Listar usuarios",
           security: [{ bearerAuth: [] }],
-          responses: { "200": { description: "OK", content: { "application/json": { schema: { type: "array", items: { $ref: "#/components/schemas/User" } } } } } },
+          responses: {
+            "200": {
+              description: "OK",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "array",
+                    items: { $ref: "#/components/schemas/User" },
+                  },
+                },
+              },
+            },
+          },
         },
       },
       "/usuarios/{username}": {
@@ -100,23 +126,59 @@ export const swaggerSpec = swaggerJSDoc({
           tags: ["Usuarios"],
           summary: "Obtener usuario",
           security: [{ bearerAuth: [] }],
-          parameters: [{ name: "username", in: "path", required: true, schema: { type: "string" } }],
-          responses: { "200": { description: "OK" }, "404": { description: "No encontrado" } },
+          parameters: [
+            {
+              name: "username",
+              in: "path",
+              required: true,
+              schema: { type: "string" },
+            },
+          ],
+          responses: {
+            "200": { description: "OK" },
+            "404": { description: "No encontrado" },
+          },
         },
         put: {
           tags: ["Usuarios"],
           summary: "Actualizar usuario",
           security: [{ bearerAuth: [] }],
-          parameters: [{ name: "username", in: "path", required: true, schema: { type: "string" } }],
-          requestBody: { content: { "application/json": { schema: { $ref: "#/components/schemas/User" } } } },
-          responses: { "200": { description: "Actualizado" }, "404": { description: "No encontrado" } },
+          parameters: [
+            {
+              name: "username",
+              in: "path",
+              required: true,
+              schema: { type: "string" },
+            },
+          ],
+          requestBody: {
+            content: {
+              "application/json": {
+                schema: { $ref: "#/components/schemas/User" },
+              },
+            },
+          },
+          responses: {
+            "200": { description: "Actualizado" },
+            "404": { description: "No encontrado" },
+          },
         },
         delete: {
           tags: ["Usuarios"],
           summary: "Eliminar usuario (admin)",
           security: [{ bearerAuth: [] }],
-          parameters: [{ name: "username", in: "path", required: true, schema: { type: "string" } }],
-          responses: { "200": { description: "Eliminado" }, "404": { description: "No encontrado" } },
+          parameters: [
+            {
+              name: "username",
+              in: "path",
+              required: true,
+              schema: { type: "string" },
+            },
+          ],
+          responses: {
+            "200": { description: "Eliminado" },
+            "404": { description: "No encontrado" },
+          },
         },
       },
       "/juegos": {
@@ -126,7 +188,11 @@ export const swaggerSpec = swaggerJSDoc({
           security: [{ bearerAuth: [] }],
           requestBody: {
             required: true,
-            content: { "application/json": { schema: { $ref: "#/components/schemas/Game" } } },
+            content: {
+              "application/json": {
+                schema: { $ref: "#/components/schemas/Game" },
+              },
+            },
           },
           responses: { "201": { description: "Creado" } },
         },
@@ -135,7 +201,17 @@ export const swaggerSpec = swaggerJSDoc({
           summary: "Listar juegos",
           security: [{ bearerAuth: [] }],
           responses: {
-            "200": { description: "OK", content: { "application/json": { schema: { type: "array", items: { $ref: "#/components/schemas/Game" } } } } },
+            "200": {
+              description: "OK",
+              content: {
+                "application/json": {
+                  schema: {
+                    type: "array",
+                    items: { $ref: "#/components/schemas/Game" },
+                  },
+                },
+              },
+            },
           },
         },
       },
@@ -144,23 +220,59 @@ export const swaggerSpec = swaggerJSDoc({
           tags: ["Juegos"],
           summary: "Obtener juego",
           security: [{ bearerAuth: [] }],
-          parameters: [{ name: "titulo", in: "path", required: true, schema: { type: "string" } }],
-          responses: { "200": { description: "OK" }, "404": { description: "No encontrado" } },
+          parameters: [
+            {
+              name: "titulo",
+              in: "path",
+              required: true,
+              schema: { type: "string" },
+            },
+          ],
+          responses: {
+            "200": { description: "OK" },
+            "404": { description: "No encontrado" },
+          },
         },
         put: {
           tags: ["Juegos"],
           summary: "Actualizar juego",
           security: [{ bearerAuth: [] }],
-          parameters: [{ name: "titulo", in: "path", required: true, schema: { type: "string" } }],
-          requestBody: { content: { "application/json": { schema: { $ref: "#/components/schemas/Game" } } } },
-          responses: { "200": { description: "Actualizado" }, "404": { description: "No encontrado" } },
+          parameters: [
+            {
+              name: "titulo",
+              in: "path",
+              required: true,
+              schema: { type: "string" },
+            },
+          ],
+          requestBody: {
+            content: {
+              "application/json": {
+                schema: { $ref: "#/components/schemas/Game" },
+              },
+            },
+          },
+          responses: {
+            "200": { description: "Actualizado" },
+            "404": { description: "No encontrado" },
+          },
         },
         delete: {
           tags: ["Juegos"],
           summary: "Eliminar juego (admin)",
           security: [{ bearerAuth: [] }],
-          parameters: [{ name: "titulo", in: "path", required: true, schema: { type: "string" } }],
-          responses: { "200": { description: "Eliminado" }, "404": { description: "No encontrado" } },
+          parameters: [
+            {
+              name: "titulo",
+              in: "path",
+              required: true,
+              schema: { type: "string" },
+            },
+          ],
+          responses: {
+            "200": { description: "Eliminado" },
+            "404": { description: "No encontrado" },
+          },
         },
       },
     },

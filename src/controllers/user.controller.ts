@@ -100,7 +100,13 @@ export const updateUserByUsernameController = async (
   res: Response
 ): Promise<void> => {
   try {
-    const updated = await updateUserByUsername(req.params.username, req.body);
+    const updateData = req.body;
+
+    // Si hay archivo subido (req.file), guardamos su ruta en los datos a actualizar
+    if (req.file) {
+      updateData.profilePicture = req.file.path;
+    }
+    const updated = await updateUserByUsername(req.params.username, updateData);
     if (!updated) {
       res.status(404).json({ message: "Usuario no encontrado" });
       return;
